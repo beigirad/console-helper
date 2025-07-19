@@ -20,23 +20,23 @@ kotlin {
 
 publishing {
     publications {
-        create<MavenPublication>("jline-helper"){
+        create<MavenPublication>("console-helper"){
             from(project.components["kotlin"])
             groupId = group.toString()
-            artifactId = "jline-helper"
+            artifactId = "console-helper"
             version = version.toString()
             pom {
-                name.set("jline-helper")
+                name.set("console-helper")
                 description.set("A helper library to work with console in kotlin-script ")
-                url.set("https://github.com/beigirad/jline-helper")
+                url.set("https://github.com/beigirad/console-helper")
                 licenses {
                     license {
                         name.set("MIT License")
-                        url.set("https://github.com/beigirad/jline-helper/blob/main/LICENSE")
+                        url.set("https://github.com/beigirad/console-helper/blob/main/LICENSE")
                     }
                 }
                 scm {
-                    url.set("https://github.com/beigirad/jline-helper")
+                    url.set("https://github.com/beigirad/console-helper")
                 }
                 developers {
                     developer {
