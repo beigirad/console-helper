@@ -1,4 +1,4 @@
-package ir.beigirad.jlinehelper
+package ir.beigirad.consolehelper
 
 sealed interface Event
 

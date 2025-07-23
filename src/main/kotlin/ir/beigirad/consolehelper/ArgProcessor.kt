@@ -1,4 +1,4 @@
-package ir.beigirad.jlinehelper
+package ir.beigirad.consolehelper
 
 class ArgProcessor(rawArgs: Array<String>) {
     private val regex = Regex("--(.*)=(.*)", RegexOption.DOT_MATCHES_ALL)

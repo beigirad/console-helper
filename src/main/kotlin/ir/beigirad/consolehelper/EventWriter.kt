@@ -1,4 +1,4 @@
-package ir.beigirad.jlinehelper
+package ir.beigirad.consolehelper
 
 import org.jline.terminal.Terminal
 import org.jline.utils.InfoCmp
