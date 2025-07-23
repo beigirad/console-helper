@@ -1,6 +1,7 @@
 package ir.beigirad.consolehelper
 
 import org.jline.terminal.Terminal
+import org.jline.terminal.TerminalBuilder
 import org.jline.utils.InfoCmp
 import java.io.Closeable
 import java.io.Flushable
@@ -13,6 +14,8 @@ class EventWriter private constructor(
     Closeable by writer {
 
     constructor(terminal: Terminal) : this(terminal, terminal.writer())
+
+    constructor() : this(TerminalBuilder.builder().system(true).build())
 
     private var lastEvent: Event? = null
 
