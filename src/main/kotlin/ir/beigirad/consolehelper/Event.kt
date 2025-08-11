@@ -2,9 +2,9 @@ package ir.beigirad.consolehelper
 
 sealed interface Event
 
-class PrintEvent(val line: String) : Event
+internal class PrintEvent(val line: String, val newLine: Boolean) : Event
 
-class ProgressEvent(message: String) : Event {
+internal class ProgressEvent(message: String) : Event {
     val lines = message.lines()
     val linesCount = lines.size
 }

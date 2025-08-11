@@ -24,7 +24,11 @@ class EventWriter private constructor(
     }
 
     fun println(message: String = "") {
-        internalPrint(PrintEvent(message))
+        internalPrint(PrintEvent(message, newLine = true))
+    }
+
+    fun print(message: String) {
+        internalPrint(PrintEvent(message, newLine = false))
     }
 
     private fun internalPrint(event: Event) {
@@ -32,7 +36,10 @@ class EventWriter private constructor(
         lastEvent = event
         when (event) {
             is PrintEvent ->
-                writer.println(event.line)
+                if (event.newLine)
+                    writer.println(event.line)
+                else
+                    writer.print(event.line)
 
             is ProgressEvent ->
                 event.lines.forEach {
