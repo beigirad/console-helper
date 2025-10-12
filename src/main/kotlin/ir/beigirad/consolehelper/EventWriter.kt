@@ -46,6 +46,7 @@ class EventWriter private constructor(
                     writer.println(it)
                 }
         }
+        writer.flush()
     }
 
     private fun appendCarriage() {
