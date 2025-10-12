@@ -31,6 +31,11 @@ class EventWriter private constructor(
         internalPrint(PrintEvent(message, newLine = false))
     }
 
+    fun error(message: String) {
+        val colorMessage = "\u001B[31m$message\u001B[0m"
+        internalPrint(PrintEvent(colorMessage, newLine = true))
+    }
+
     private fun internalPrint(event: Event) {
         appendCarriage()
         lastEvent = event
