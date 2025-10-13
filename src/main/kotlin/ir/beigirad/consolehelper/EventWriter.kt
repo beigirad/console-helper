@@ -31,9 +31,12 @@ class EventWriter private constructor(
         internalPrint(PrintEvent(message, newLine = false))
     }
 
+    fun errorln(message: String) {
+        internalPrint(PrintEvent("${colors.red}$message${colors.reset}", newLine = true))
+    }
+
     fun error(message: String) {
-        val colorMessage = "\u001B[31m$message\u001B[0m"
-        internalPrint(PrintEvent(colorMessage, newLine = true))
+        internalPrint(PrintEvent("${colors.red}$message${colors.reset}", newLine = false))
     }
 
     private fun internalPrint(event: Event) {
@@ -64,5 +67,10 @@ class EventWriter private constructor(
                 terminal.puts(InfoCmp.Capability.clr_eol)
             }
         }
+    }
+
+    private object colors {
+        val red = "\u001B[31m"
+        val reset = "\u001B[0m"
     }
 }
