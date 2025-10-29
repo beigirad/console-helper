@@ -34,4 +34,34 @@ class ArgProcessorTest {
         val processor = ArgProcessor(arrayOf("--key1=value1", "--key2=value2"))
         assertEquals("Args({key1=value1, key2=value2})", processor.toString())
     }
+
+    @Test
+    fun `test values that are multiline`() {
+        val value = "val\nue\n1\n"
+        val processor = ArgProcessor(arrayOf("--key1=$value", "--key2=value2"))
+        assertEquals(value, processor.getOrNull("key1"))
+        assertEquals("value2", processor["key2"])
+    }
+
+    @Test
+    fun `test values that have spaces`() {
+        val value = "val 1 "
+        val processor = ArgProcessor(arrayOf("--key1=$value", "--key2=value2"))
+        assertEquals(value, processor.getOrNull("key1"))
+        assertEquals("value2", processor["key2"])
+    }
+
+    @Test
+    fun `test values that have '='`() {
+        val processor = ArgProcessor(arrayOf("--key1=val=ue1", "--key2=value2"))
+        assertEquals("val=ue1", processor.getOrNull("key1"))
+        assertEquals("value2", processor["key2"])
+    }
+
+    @Test
+    fun `test values that have '--'`() {
+        val processor = ArgProcessor(arrayOf("--key1=val=ue--1=", "--key2=value2"))
+        assertEquals("val=ue--1=", processor.getOrNull("key1"))
+        assertEquals("value2", processor["key2"])
+    }
 }

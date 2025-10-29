@@ -1,7 +1,7 @@
 package ir.beigirad.consolehelper
 
 class ArgProcessor(rawArgs: Array<String>) {
-    private val regex = Regex("--(.*)=(.*)", RegexOption.DOT_MATCHES_ALL)
+    private val regex = Regex("--(\\S+?)=(.*?)(?=\\n--|\\z)", RegexOption.DOT_MATCHES_ALL)
     private val arg = rawArgs.mapNotNull {
         val matches = regex.find(it) ?: return@mapNotNull null
         matches.groupValues[1] to matches.groupValues[2]
