@@ -11,7 +11,15 @@ group = "ir.beigirad"
 version = "1.0-SNAPSHOT"
 
 dependencies {
-    api("org.jline:jline:3.23.0")
+    api("org.jline:jline:3.25.0")
+
+    testImplementation(platform("org.junit:junit-bom:5.14.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 kotlin {
