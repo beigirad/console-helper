@@ -12,6 +12,7 @@ version = "1.0-SNAPSHOT"
 
 dependencies {
     api("org.jline:jline:3.25.0")
+    implementation("eu.jrie.jetbrains:kotlin-shell-core:0.2.1")
 
     testImplementation(platform("org.junit:junit-bom:5.14.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
