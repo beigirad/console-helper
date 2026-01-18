@@ -3,8 +3,8 @@ plugins {
     `maven-publish`
 }
 
-group = "ir.beigirad"
-version = "1.0-SNAPSHOT"
+group = "com.github.beigirad"
+version = "0.1"
 
 dependencies {
     api("org.jline:jline:3.25.0")
