@@ -17,7 +17,7 @@ class EventWriter private constructor(
 
     constructor() : this(TerminalBuilder.builder().system(true).build())
 
-    private var lastEvent: Event? = null
+    private var lastProgress: ProgressEvent? = null
 
     fun printlnProgress(message: String) {
         internalPrint(ProgressEvent(message))
@@ -40,32 +40,44 @@ class EventWriter private constructor(
     }
 
     private fun internalPrint(event: Event) {
-        appendCarriage()
-        lastEvent = event
         when (event) {
-            is PrintEvent ->
+            is PrintEvent -> {
+                appendCarriage() // clear last progress if it exists
+
                 if (event.newLine)
                     writer.println(event.line)
                 else
                     writer.print(event.line)
 
-            is ProgressEvent ->
-                event.lines.forEach {
-                    writer.println(it)
-                }
+                lastProgress?.print() // keep progress at bottom
+            }
+
+            is ProgressEvent -> {
+                if (event == lastProgress) return
+
+                appendCarriage() // clear last progress if it exists
+
+                event.print()
+                lastProgress = event
+            }
         }
-        writer.flush()
+
+        writer.flush() // wait for flushing...
+    }
+
+    private fun ProgressEvent.print() {
+        this.lines.forEach {
+            writer.println(it)
+        }
     }
 
     private fun appendCarriage() {
-        val last = lastEvent ?: return
+        val last = lastProgress ?: return
 
-        if (last is ProgressEvent) {
-            repeat(last.linesCount) {
-                terminal.puts(InfoCmp.Capability.cursor_up, 1)
-                terminal.puts(InfoCmp.Capability.carriage_return)
-                terminal.puts(InfoCmp.Capability.clr_eol)
-            }
+        repeat(last.linesCount) {
+            terminal.puts(InfoCmp.Capability.cursor_up, 1)
+            terminal.puts(InfoCmp.Capability.carriage_return)
+            terminal.puts(InfoCmp.Capability.clr_eol)
         }
     }
 
@@ -78,7 +90,7 @@ class EventWriter private constructor(
 
     private class PrintEvent(val line: String, val newLine: Boolean) : Event
 
-    private class ProgressEvent(message: String) : Event {
+    private data class ProgressEvent(private val message: String) : Event {
         val lines = message.lines()
         val linesCount = lines.size
     }
