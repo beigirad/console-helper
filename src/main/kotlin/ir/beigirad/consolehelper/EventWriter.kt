@@ -42,7 +42,7 @@ class EventWriter private constructor(
     private fun internalPrint(event: Event) {
         when (event) {
             is PrintEvent -> {
-                appendCarriage() // clear last progress if it exists
+                lastProgress?.clear() // clear if it exists
 
                 if (event.newLine)
                     writer.println(event.line)
@@ -55,7 +55,7 @@ class EventWriter private constructor(
             is ProgressEvent -> {
                 if (event == lastProgress) return
 
-                appendCarriage() // clear last progress if it exists
+                lastProgress?.clear() // clear if it exists
 
                 event.print()
                 lastProgress = event
@@ -71,10 +71,8 @@ class EventWriter private constructor(
         }
     }
 
-    private fun appendCarriage() {
-        val last = lastProgress ?: return
-
-        repeat(last.linesCount) {
+    private fun ProgressEvent.clear() {
+        repeat(this.linesCount) {
             terminal.puts(InfoCmp.Capability.cursor_up, 1)
             terminal.puts(InfoCmp.Capability.carriage_return)
             terminal.puts(InfoCmp.Capability.clr_eol)
