@@ -73,4 +73,13 @@ class EventWriter private constructor(
         val red = "\u001B[31m"
         val reset = "\u001B[0m"
     }
+
+    private sealed interface Event
+
+    private class PrintEvent(val line: String, val newLine: Boolean) : Event
+
+    private class ProgressEvent(message: String) : Event {
+        val lines = message.lines()
+        val linesCount = lines.size
+    }
 }
