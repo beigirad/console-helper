@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.github.beigirad"
-version = "0.2"
+version = "0.3"
 
 dependencies {
     api("org.jline:jline:3.25.0")
