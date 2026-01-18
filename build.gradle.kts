@@ -3,10 +3,6 @@ plugins {
     `maven-publish`
 }
 
-repositories {
-    mavenCentral()
-}
-
 group = "ir.beigirad"
 version = "1.0-SNAPSHOT"
 
