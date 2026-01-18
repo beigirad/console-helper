@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.8.20"
     `maven-publish`
+    id("metalava-extended") version "1.1"
 }
 
 group = "com.github.beigirad"

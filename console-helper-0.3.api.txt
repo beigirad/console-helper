@@ -1,0 +1,52 @@
+// Signature format: 4.0
+package ir.beigirad.consolehelper {
+
+  public final class ArgProcessor {
+    ctor public ArgProcessor(String![]);
+    method public String get(String);
+    method public String? getOrNull(String);
+    method public String toString();
+  }
+
+  public final class EventWriter {
+    ctor public EventWriter(org.jline.terminal.Terminal);
+    ctor public EventWriter();
+    method public void close();
+    method public void error(String);
+    method public void errorln(String);
+    method public void flush();
+    method public void print(String);
+    method public void println(String);
+    method public void printlnProgress(String);
+  }
+
+  public final class Table {
+    ctor public Table(java.lang.String!...);
+    ctor public Table();
+    method public void addRow(java.lang.String!...);
+    method public String![] getDelimiters();
+    method public String toString();
+  }
+
+}
+
+package ir.beigirad.consolehelper.file {
+
+  public final class FileKt {
+    ctor public FileKt();
+    method public static java.io.File div(java.io.File, String);
+    method public static java.io.File rootDir();
+  }
+
+}
+
+package ir.beigirad.consolehelper.shell {
+
+  public final class ShellKt {
+    ctor public ShellKt();
+    method public static String runCommand(String);
+    method public static Object? runCommand(String, eu.jrie.jetbrains.kotlinshell.shell.Shell, kotlin.jvm.functions.Function1<? super java.lang.String,kotlin.Unit>, kotlin.jvm.functions.Function1<? super java.lang.String,kotlin.Unit>, kotlin.coroutines.Continuation<? super kotlin.Unit>);
+  }
+
+}
+
