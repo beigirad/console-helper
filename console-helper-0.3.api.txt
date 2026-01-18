@@ -9,7 +9,8 @@ package ir.beigirad.consolehelper {
   }
 
   public final class EventWriter {
-    ctor public EventWriter(org.jline.terminal.Terminal);
+    ctor public EventWriter(org.jline.terminal.Terminal?, boolean);
+    ctor public EventWriter(org.jline.terminal.Terminal?);
     ctor public EventWriter();
     method public void close();
     method public void error(String);

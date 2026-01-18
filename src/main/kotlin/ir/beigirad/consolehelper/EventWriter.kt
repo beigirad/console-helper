@@ -9,15 +9,22 @@ import java.io.PrintWriter
 
 class EventWriter private constructor(
     private val terminal: Terminal,
-    private val writer: PrintWriter,
+    private val writer: PrintWriter = terminal.writer(),
+    private val showIndicator: Boolean = true,
 ) : Flushable by writer,
     Closeable by writer {
 
-    constructor(terminal: Terminal) : this(terminal, terminal.writer())
-
-    constructor() : this(TerminalBuilder.builder().system(true).build())
+    @JvmOverloads
+    constructor(
+        terminal: Terminal? = null,
+        showIndicator: Boolean = true
+    ) : this(
+        terminal = (terminal ?: TerminalBuilder.builder().system(true).build()),
+        showIndicator = showIndicator,
+    )
 
     private var lastProgress: ProgressEvent? = null
+    private var progressPhase = 0
 
     fun printlnProgress(message: String) {
         internalPrint(ProgressEvent(message))
@@ -65,14 +72,19 @@ class EventWriter private constructor(
         writer.flush() // wait for flushing...
     }
 
+    private val indicatorSigns = listOf("│", "/", "─", "\\")
     private fun ProgressEvent.print() {
+        progressPhase = (progressPhase + 1) % indicatorSigns.size
+        val indicatorSign = indicatorSigns[progressPhase]
+        writer.println(indicatorSign)
+
         this.lines.forEach {
             writer.println(it)
         }
     }
 
     private fun ProgressEvent.clear() {
-        repeat(this.linesCount) {
+        repeat(this.linesCount + if (showIndicator) 1 else 0) {
             terminal.puts(InfoCmp.Capability.cursor_up, 1)
             terminal.puts(InfoCmp.Capability.carriage_return)
             terminal.puts(InfoCmp.Capability.clr_eol)
