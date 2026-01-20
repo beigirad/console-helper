@@ -45,4 +45,26 @@ class Tree(private val head: String) {
         private const val TAIL = "└──"
         private const val CONT = "├──"
     }
+
+    @DslMarker
+    annotation class TreeDsl
+
+    @TreeDsl
+    class TreeBuilder(head: String) {
+        private val tree = Tree(head)
+
+        fun node(name: String) {
+            tree.addNode(name)
+        }
+
+        fun node(name: String, block: TreeBuilder.() -> Unit) {
+            val builder = TreeBuilder(name).apply(block)
+            tree.addNode(builder.tree)
+        }
+
+        fun build(): Tree = tree
+    }
 }
+
+inline fun buildTree(head: String, block: Tree.TreeBuilder.() -> Unit): Tree =
+    Tree.TreeBuilder(head).apply(block).build()
