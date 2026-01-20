@@ -26,7 +26,7 @@ kotlin {
 
 publishing {
     publications {
-        create<MavenPublication>("console-helper"){
+        create<MavenPublication>("ConsoleHelper") {
             from(project.components["kotlin"])
             groupId = group.toString()
             artifactId = "console-helper"
@@ -49,6 +49,13 @@ publishing {
                         name.set("Farhad Beigirad")
                         url.set("https://github.com/beigirad")
                     }
+                }
+            }
+
+            repositories {
+                maven {
+                    name = "PegahPublic"
+                    url = uri("https://reg.production.tpsl.ir/artifactory/maven-pegah-public")
                 }
             }
         }
