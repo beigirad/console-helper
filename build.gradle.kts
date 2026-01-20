@@ -20,6 +20,10 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.clean {
+    delete("build")
+}
+
 kotlin {
     jvmToolchain(11)
 }
