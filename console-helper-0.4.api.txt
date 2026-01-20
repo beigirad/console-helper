@@ -3,6 +3,7 @@ package ir.beigirad.consolehelper {
 
   public final class ArgProcessor {
     ctor public ArgProcessor(String![]);
+    method public boolean contains(String);
     method public String get(String);
     method public String? getOrNull(String);
     method public String toString();

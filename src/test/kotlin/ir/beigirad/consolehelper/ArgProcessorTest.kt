@@ -26,7 +26,7 @@ class ArgProcessorTest {
     fun `test get or throws-exception`() {
         val processor = ArgProcessor(arrayOf("--key1=value1", "--key2=value2"))
         val exception = assertThrows<IllegalStateException> { processor["missingKey"] }
-        assertEquals("Required 'missingKey' was null.", exception.message)
+        assertEquals("Required 'missingKey' was absent.", exception.message)
     }
 
     @Test
@@ -63,5 +63,26 @@ class ArgProcessorTest {
         val processor = ArgProcessor(arrayOf("--key1=val=ue--1=", "--key2=value2"))
         assertEquals("val=ue--1=", processor.getOrNull("key1"))
         assertEquals("value2", processor["key2"])
+    }
+
+    @Test
+    fun `throw exception when key is not exists`() {
+        val processor = ArgProcessor(arrayOf("--key1"))
+
+        assertEquals(false, processor.contains("key2"))
+        assertEquals(null, processor.getOrNull("key2"))
+        val exception = assertThrows<Exception> { processor["key2"] }
+        assertEquals("Required 'key2' was absent.", exception.message)
+    }
+
+    @Test
+    fun `return empty when a key have no value or it is empty`() {
+        val processor = ArgProcessor(arrayOf("--key1", "--key2="))
+
+        listOf("key1", "key2").forEach { key ->
+            assertEquals(true, processor.contains(key))
+            assertEquals("", processor.getOrNull(key))
+            assertEquals("", processor[key])
+        }
     }
 }
