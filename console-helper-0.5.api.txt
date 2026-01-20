@@ -30,6 +30,32 @@ package ir.beigirad.consolehelper {
     method public String toString();
   }
 
+  public final class Tree {
+    ctor public Tree(String);
+    method public ir.beigirad.consolehelper.Tree addNode(ir.beigirad.consolehelper.Tree);
+    method public ir.beigirad.consolehelper.Tree addNode(String);
+    method public String toString();
+    field public static final ir.beigirad.consolehelper.Tree.Companion Companion;
+  }
+
+  public static final class Tree.Companion {
+  }
+
+  @ir.beigirad.consolehelper.Tree.TreeDsl public static final class Tree.TreeBuilder {
+    ctor public Tree.TreeBuilder(String);
+    method public ir.beigirad.consolehelper.Tree build();
+    method public void node(String);
+    method public void node(String, kotlin.jvm.functions.Function1<? super ir.beigirad.consolehelper.Tree.TreeBuilder,kotlin.Unit>);
+  }
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME) @kotlin.DslMarker public static @interface Tree.TreeDsl {
+  }
+
+  public final class TreeKt {
+    ctor public TreeKt();
+    method public static ir.beigirad.consolehelper.Tree buildTree(String, kotlin.jvm.functions.Function1<? super ir.beigirad.consolehelper.Tree.TreeBuilder,kotlin.Unit>);
+  }
+
 }
 
 package ir.beigirad.consolehelper.file {
