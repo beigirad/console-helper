@@ -13,6 +13,7 @@ class EventWriter private constructor(
     private val showIndicator: Boolean = true,
 ) : Flushable by writer,
     Closeable by writer {
+    private val isInteractive = System.console() != null
 
     @JvmOverloads
     constructor(
@@ -27,7 +28,8 @@ class EventWriter private constructor(
     private var progressPhase = 0
 
     fun printlnProgress(message: String) {
-        internalPrint(ProgressEvent(message))
+        if (isInteractive)
+            internalPrint(ProgressEvent(message))
     }
 
     fun println(message: String = "") {
