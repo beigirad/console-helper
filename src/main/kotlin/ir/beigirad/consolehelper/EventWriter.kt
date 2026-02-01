@@ -6,6 +6,7 @@ import org.jline.utils.InfoCmp
 import java.io.Closeable
 import java.io.Flushable
 import java.io.PrintWriter
+import kotlin.time.Duration.Companion.milliseconds
 
 class EventWriter private constructor(
     private val terminal: Terminal,
@@ -14,6 +15,7 @@ class EventWriter private constructor(
 ) : Flushable by writer,
     Closeable by writer {
     private val isInteractive = System.console() != null
+    private val startTime = System.currentTimeMillis().milliseconds
 
     @JvmOverloads
     constructor(
@@ -78,7 +80,8 @@ class EventWriter private constructor(
     private fun ProgressEvent.print() {
         progressPhase = (progressPhase + 1) % indicatorSigns.size
         val indicatorSign = indicatorSigns[progressPhase]
-        writer.println(indicatorSign)
+        val duration = System.currentTimeMillis().milliseconds - startTime
+        writer.println("$indicatorSign   $duration")
 
         this.lines.forEach {
             writer.println(it)
