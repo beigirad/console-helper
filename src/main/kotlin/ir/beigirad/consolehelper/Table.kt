@@ -31,4 +31,21 @@ class Table(
         val lengthOfCurrentCell = text.length + delimiterLength
         return text + " ".repeat(lengthOfMaxColumn - lengthOfCurrentCell)
     }
+
+    @DslMarker
+    annotation class TableDsl
+
+    @TableDsl
+    class TableBuilder(vararg delimiters: String = arrayOf(" ")) {
+        private val tree = Table(*delimiters)
+
+        fun row(vararg cells: String) {
+            tree.addRow(*cells)
+        }
+
+        fun build(): Table = tree
+    }
 }
+
+inline fun buildTable(vararg delimiters: String, block: Table.TableBuilder.() -> Unit): Table =
+    Table.TableBuilder(*delimiters).apply(block).build()
